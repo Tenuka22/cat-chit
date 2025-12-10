@@ -23,11 +23,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${sans.className} antialiased min-h-screen size-full flex flex-col`}
+        className={`${sans.className} min-w-screen min-h-screen flex flex-col antialiased relative size-full`}
       >
-        <ConvexClientProvider>{children}</ConvexClientProvider>
+        <div className="isolate size-full flex flex-1 flex-col">
+          <ConvexClientProvider>{children}</ConvexClientProvider>
+        </div>
       </body>
     </html>
   );
