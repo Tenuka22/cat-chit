@@ -1,26 +1,64 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Primary: Bubblegum pink (cat's cape) */
+  --color-primary: oklch(92% 0.15 330); /* #FFB3F6 approx */
+  --color-primary-foreground: oklch(20% 0.1 280); /* #1E0039 approx */
+
+  /* Secondary: Cyan blue */
+  --color-secondary: oklch(85% 0.2 200); /* #6BEBFF approx */
+  --color-secondary-foreground: oklch(15% 0.05 240); /* #0F172A approx */
+
+  /* Tertiary: Periwinkle blue */
+  --color-tertiary: oklch(88% 0.08 250); /* #B3D0FF approx */
+  --color-tertiary-foreground: oklch(20% 0.1 280); /* #1E0039 approx */
+
+  /* Accent: Icy light blue (background) */
+  --color-accent: oklch(95% 0.02 220); /* #E0F2FF approx */
+  --color-accent-foreground: oklch(30% 0.05 240); /* #334155 approx */
+
+  /* Extra pastels */
+  --color-pastel-pink: oklch(92% 0.15 330); /* #FFB3F6 */
+  --color-pastel-mint: oklch(85% 0.12 160); /* #A7F3D0 */
+  --color-pastel-yellow: oklch(95% 0.2 80); /* #FFD43B */
+  --color-pastel-lavender: oklch(85% 0.1 290); /* #D8B4FE */
+  --color-pastel-sky: oklch(88% 0.1 220); /* #96D0FF */
+
+  /* Utility colors for prose */
+  --color-muted: oklch(90% 0.02 240); /* Light gray background */
+  --color-muted-foreground: oklch(40% 0.05 240); /* Darker text */
+  --color-border: oklch(80% 0.02 240); /* Border color */
+
+  --spacing-space-sm: 0.5rem; /* 8px */
+  --spacing-space-md: 1rem; /* 16px */
+  --spacing-space-lg: 2rem; /* 32px */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    @apply bg-primary text-primary-foreground
+    prose prose-lg
+    prose-headings:text-primary-foreground prose-headings:font-semibold
+    prose-p:text-primary-foreground
+    prose-a:text-secondary prose-a:no-underline hover:prose-a:underline
+    prose-strong:text-primary-foreground prose-strong:font-semibold
+    prose-em:text-primary-foreground
+    prose-code:text-primary-foreground prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
+    prose-pre:bg-muted prose-pre:text-primary-foreground prose-pre:border prose-pre:border-border
+    prose-blockquote:text-muted-foreground prose-blockquote:border-l-secondary prose-blockquote:bg-muted/50 prose-blockquote:py-1
+    prose-hr:border-border
+    prose-ul:text-primary-foreground
+    prose-ol:text-primary-foreground
+    prose-li:text-primary-foreground prose-li:marker:text-secondary
+    prose-table:text-primary-foreground
+    prose-thead:text-primary-foreground prose-thead:border-border
+    prose-tr:border-border
+    prose-th:text-primary-foreground
+    prose-td:text-primary-foreground
+    prose-img:rounded-lg prose-img:border prose-img:border-border
+    prose-figure:text-primary-foreground
+    prose-figcaption:text-muted-foreground
+    prose-video:rounded-lg prose-video:border prose-video:border-border;
   }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
 }
