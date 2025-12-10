@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@plugin "@tailwindcss/typography";
 
 @theme {
   /* Primary: Bubblegum pink (cat's cape) */
@@ -33,7 +32,7 @@
   --spacing-space-sm: 0.5rem; /* 8px */
   --spacing-space-md: 1rem; /* 16px */
   --spacing-space-lg: 2rem; /* 32px */
-  --spacing-space-massive: 4rem; /* 32px */
+  --spacing-space-massive: 3rem; /* 32px */
   --radius: 0.65rem;
 
   --radius-sm: calc(var(--radius) - 4px);
@@ -44,28 +43,9 @@
 
 @layer base {
   body {
-    @apply bg-primary text-primary-foreground border-border
-    prose lg:prose-xl
-    prose-headings:text-primary-foreground prose-headings:font-semibold
-    prose-p:text-primary-foreground
-    prose-a:text-secondary prose-a:no-underline hover:prose-a:underline
-    prose-strong:text-primary-foreground prose-strong:font-semibold
-    prose-em:text-primary-foreground
-    prose-code:text-primary-foreground prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
-    prose-pre:bg-muted prose-pre:text-primary-foreground prose-pre:border prose-pre:border-border
-    prose-blockquote:text-muted-foreground prose-blockquote:border-l-secondary prose-blockquote:bg-muted/50 prose-blockquote:py-1
-    prose-hr:border-border
-    prose-ul:text-primary-foreground
-    prose-ol:text-primary-foreground
-    prose-li:text-primary-foreground prose-li:marker:text-secondary
-    prose-table:text-primary-foreground
-    prose-thead:text-primary-foreground prose-thead:border-border
-    prose-tr:border-border
-    prose-th:text-primary-foreground
-    prose-td:text-primary-foreground
-    prose-img:rounded-lg prose-img:border prose-img:border-border
-    prose-figure:text-primary-foreground
-    prose-figcaption:text-muted-foreground
-    prose-video:rounded-lg prose-video:border prose-video:border-border;
+    @apply bg-primary text-primary-foreground;
+  }
+  * {
+    @apply border-border;
   }
 }

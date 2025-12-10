@@ -1,4 +1,5 @@
-import { Button } from "@/components/ui/button";
+import { H1, H2, H3, P, Span } from "@/components/ui/typography";
+import { Brush } from "lucide-react";
 
 function ColorPreviewItem({
   label,
@@ -10,30 +11,20 @@ function ColorPreviewItem({
   fg: string;
 }) {
   return (
-    <div className="group/color-preview flex flex-col gap-space-sm">
-      <div className={`${bg} rounded-lg p-space-md border-2 border-border`}>
+    <div className="group/color-preview flex flex-col gap-space-sm ">
+      <div className={`${bg} rounded-lg p-space-md border-2`}>
         <div className="flex flex-col gap-space-sm">
-          <h6 className={`${fg} text-xl font-bold`}>{label}</h6>
-          <p className={`${fg} text-sm opacity-90`}>
+          <H3 className={`${fg} text-xl`}>{label}</H3>
+          <P className={`${fg} text-sm opacity-90`}>
             The rapid growth of urban centers presents unique challenges for
             sustainable living, requiring innovative solutions for transport,
             waste, and energy
-          </p>
-          <div
-            className={`flex rounded-lg gap-2 bg-linear-to-br from-slate-50 to-slate-100 w-fit p-space-sm`}
-          >
-            <Button variant="empty" className={`${fg} ${bg}`}>
-              Button
-            </Button>
-            <Button variant="empty" className={`${bg} ${fg}`}>
-              Inverted
-            </Button>
-          </div>
+          </P>
         </div>
       </div>
       <div className="flex flex-col gap-space-sm px-space-md pt-space-sm">
-        <span className="text-xs text-muted-foreground font-mono">{bg}</span>
-        <span className="text-xs text-muted-foreground/60 font-mono">{fg}</span>
+        <Span className="text-xs text-muted-foreground">{bg}</Span>
+        <Span className="text-xs text-muted-foreground/60">{fg}</Span>
       </div>
     </div>
   );
@@ -49,16 +40,14 @@ function ColorSwatchRow({
       {colors.map((color) => (
         <div
           key={color.name}
-          className="flex text-muted-foreground/70 text-center flex-col items-center gap-1"
+          className="flex pt-space-sm text-muted-foreground/70 flex-col items-center gap-1"
         >
           <div className={`w-16 h-16 rounded-lg ${color.class} border`} />
-          <div className="flex flex-col gap-0 pt-space-sm">
-            <span className="text-xs text-muted-foreground font-mono">
-              {color.name}
-            </span>
-            <span className="text-xs text-muted-foreground/60 font-mono">
+          <div className="flex flex-col text-center gap-0 pt-space-sm">
+            <Span className="text-xs text-muted-foreground">{color.name}</Span>
+            <Span className="text-xs text-muted-foreground/60">
               {color.class}
-            </span>
+            </Span>
           </div>
         </div>
       ))}
@@ -75,11 +64,11 @@ const THEME_PAGE = () => {
   ];
 
   const pastelColors = [
-    { name: "Pastel Pink", bg: "bg-pastel-pink", fg: "text-slate-900" },
-    { name: "Pastel Mint", bg: "bg-pastel-mint", fg: "text-slate-900" },
-    { name: "Pastel Yellow", bg: "bg-pastel-yellow", fg: "text-slate-900" },
-    { name: "Pastel Lavender", bg: "bg-pastel-lavender", fg: "text-slate-900" },
-    { name: "Pastel Sky", bg: "bg-pastel-sky", fg: "text-slate-900" },
+    { name: "Pastel Pink", bg: "bg-pastel-pink", fg: "text-slate-700" },
+    { name: "Pastel Mint", bg: "bg-pastel-mint", fg: "text-slate-700" },
+    { name: "Pastel Yellow", bg: "bg-pastel-yellow", fg: "text-slate-700" },
+    { name: "Pastel Lavender", bg: "bg-pastel-lavender", fg: "text-slate-700" },
+    { name: "Pastel Sky", bg: "bg-pastel-sky", fg: "text-slate-700" },
   ];
 
   const utilityColors = [
@@ -106,20 +95,23 @@ const THEME_PAGE = () => {
     { name: "Border", class: "bg-border" },
   ];
 
+  const primary_background = "bg-linear-to-br from-slate-100 to-slate-200";
+
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100 p-space-lg flex items-center justify-center">
+    <div className="size-full pt-space-massive p-space-lg flex items-start bg-slate-200 justify-center">
       <div className="max-w-7xl flex flex-col gap-space-md">
-        <header className="text-center pt-space-massive">
-          <h1 className="text-5xl font-bold text-slate-900">
-            Theme Color System
-          </h1>
-          <p className="text-slate-600 text-lg">
+        <header>
+          <div className="flex items-center gap-space-sm">
+            <Brush className="size-space-lg" />
+            <H1 className="text-5xl ">Theme Color System</H1>
+          </div>
+          <P className=" text-lg">
             Complete color palette with contrast examples
-          </p>
+          </P>
         </header>
 
-        <section className="flex flex-col">
-          <h2 className="text-3xl font-bold text-slate-800">Main Colors</h2>
+        <section className="flex flex-col gap-space-md">
+          <H2 className="text-3xl ">Main Colors</H2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {mainColors.map((color) => (
               <ColorPreviewItem
@@ -132,8 +124,8 @@ const THEME_PAGE = () => {
           </div>
         </section>
 
-        <section className="flex flex-col">
-          <h2 className="text-3xl font-bold text-slate-800">Pastel Colors</h2>
+        <section className="flex flex-col gap-space-md">
+          <H2 className="text-3xl ">Pastel Colors</H2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {pastelColors.map((color) => (
               <ColorPreviewItem
@@ -146,18 +138,16 @@ const THEME_PAGE = () => {
           </div>
         </section>
 
-        <section className="flex flex-col">
-          <h2 className="text-3xl font-bold text-slate-800">
-            All Color Swatches
-          </h2>
-          <div className="bg-white rounded-xl p-8 border border-border">
+        <section className="flex flex-col gap-space-md">
+          <H2 className="text-3xl ">All Color Swatches</H2>
+          <div className={`${primary_background} rounded-sm p-space-md`}>
             <ColorSwatchRow colors={allSwatches} />
           </div>
         </section>
 
-        <section className="flex flex-col">
-          <h2 className="text-3xl font-bold text-slate-800">Utility Colors</h2>
-          <div className="bg-white rounded-xl p-8 border border-border">
+        <section className="flex flex-col gap-space-md">
+          <H2 className="text-3xl ">Utility Colors</H2>
+          <div className={`${primary_background} rounded-sm p-space-md`}>
             <ColorSwatchRow colors={utilityColors} />
           </div>
         </section>
