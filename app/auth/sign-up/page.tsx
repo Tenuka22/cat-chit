@@ -1,2 +1,9 @@
-const SIGN_UP_PAGE = () => {};
-export default SIGN_UP_PAGE;
+import SignUpForm from "@/components/auth/SignUpForm";
+
+export default function SignUpPage() {
+  return (
+    <div className="flex flex-col items-center justify-center flex-1 size-full">
+      <SignUpForm />
+    </div>
+  );
+}

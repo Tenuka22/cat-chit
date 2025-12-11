@@ -23,6 +23,7 @@ import {
 import { log } from "@/lib/logger/client";
 import { useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
+import { useRouter } from "next/navigation";
 
 const otpSchema = z.object({
   otp: z
@@ -36,18 +37,22 @@ export function OTPForm({
   onSuccess,
   onError,
   onBack,
+  authType,
 }: {
   email: string;
   onError: (error: StateFinalizedMessage) => void;
   onBack: () => void;
   onSuccess: (success: StateFinalizedMessage) => void;
+  authType: "sign-in" | "sign-up";
 }) {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const form = useForm({
     defaultValues: { otp: "" },
     validators: { onSubmit: otpSchema },
     onSubmit: async ({ value }) => {
-      const action = "email otp verifing";
+      const action = `${authType} OTP verification`;
+
       try {
         setLoading(true);
         const { data, error } = await authClient.emailOtp.verifyEmail({
@@ -58,9 +63,10 @@ export function OTPForm({
         if (data?.status) {
           onSuccess({
             action,
-            message:
-              "Successfully logged in with the OPT!. You will redirected shortly.",
+            message: `Successfully verified OTP for ${authType}. You will be redirected shortly.`,
           });
+
+          setTimeout(() => router.push("/"), 300);
         } else {
           log.withMetadata({ error }).error(action.toUpperCase());
           onError(mapAuthErrors(action, error?.code));
@@ -73,6 +79,9 @@ export function OTPForm({
       }
     },
   });
+
+  const buttonText =
+    authType === "sign-up" ? "Verify & Sign Up" : "Verify & Sign In";
 
   return (
     <div className="space-y-6">
@@ -140,7 +149,7 @@ export function OTPForm({
               className="w-full"
               disabled={loading}
             >
-              Verify & Sign In{" "}
+              {buttonText}
               {loading ? (
                 <Spinner />
               ) : (
@@ -148,7 +157,7 @@ export function OTPForm({
               )}{" "}
             </Button>
             <Button type="button" variant="ghost" onClick={onBack}>
-              Back to email chnage <MailMinus className="ml-2 h-4 w-4" />
+              Back to email change <MailMinus className="ml-2 h-4 w-4" />
             </Button>
           </ButtonGroup>
         </FieldSet>

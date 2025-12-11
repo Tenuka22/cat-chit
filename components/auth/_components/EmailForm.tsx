@@ -14,7 +14,7 @@ import { ChevronRight, Globe } from "lucide-react";
 import { z } from "zod";
 import { useForm } from "@tanstack/react-form";
 import { authClient } from "@/lib/auth/client";
-import { AUTH_ERRORS, mapAuthErrors } from "@/lib/auth/errors";
+import { mapAuthErrors } from "@/lib/auth/errors";
 import { StateFinalizedMessage } from "@/lib/types";
 import { useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
@@ -29,18 +29,20 @@ export function EmailForm({
   onEmailSent,
   onError,
   onSuccess,
+  authType,
 }: {
   defaultEmail: string;
   onEmailSent: (email: string) => void;
   onError: (error: StateFinalizedMessage) => void;
   onSuccess: (success: StateFinalizedMessage) => void;
+  authType: "sign-in" | "sign-up";
 }) {
   const [loading, setLoading] = useState(false);
   const form = useForm({
     defaultValues: { email: defaultEmail },
     validators: { onSubmit: emailSchema },
     onSubmit: async ({ value }) => {
-      const action = "email otp sending";
+      const action = `${authType} email sending`;
       try {
         setLoading(true);
         const { data, error } = await authClient.emailOtp.sendVerificationOtp({
@@ -52,7 +54,7 @@ export function EmailForm({
           onEmailSent(value.email);
           onSuccess({
             action,
-            message: "Successfully send the email to your inbox.",
+            message: `Successfully sent the email to your inbox for ${authType}.`,
           });
         } else {
           log.withMetadata({ error }).error(action.toUpperCase());
@@ -66,6 +68,9 @@ export function EmailForm({
       }
     },
   });
+
+  const buttonText =
+    authType === "sign-up" ? "Send OTP Code for Sign Up" : "Send OTP Code";
 
   return (
     <form
@@ -109,7 +114,7 @@ export function EmailForm({
 
         <ButtonGroup orientation="vertical" className="w-full gap-3">
           <Button disabled={loading} type="submit" size="lg" className="w-full">
-            Send OTP Code
+            {buttonText}
             {loading ? <Spinner /> : <ChevronRight className="ml-2 h-4 w-4" />}
           </Button>
 
