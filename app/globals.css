@@ -1,50 +1,50 @@
 @import "tailwindcss";
-
 @theme {
+  --color-background: oklch(96.8% 0.007 247.896);
+  --color-foreground: oklch(12.9% 0.042 264.695);
+
   /* Primary: Bubblegum pink (cat's cape) */
   --color-primary: oklch(92% 0.15 330); /* #FFB3F6 approx */
   --color-primary-foreground: oklch(20% 0.1 280); /* #1E0039 approx */
-
   /* Secondary: Cyan blue */
   --color-secondary: oklch(85% 0.2 200); /* #6BEBFF approx */
   --color-secondary-foreground: oklch(15% 0.05 240); /* #0F172A approx */
-
   /* Tertiary: Periwinkle blue */
   --color-tertiary: oklch(88% 0.08 250); /* #B3D0FF approx */
   --color-tertiary-foreground: oklch(20% 0.1 280); /* #1E0039 approx */
-
   /* Accent: Icy light blue (background) */
   --color-accent: oklch(95% 0.02 220); /* #E0F2FF approx */
   --color-accent-foreground: oklch(30% 0.05 240); /* #334155 approx */
-
   /* Extra pastels */
   --color-pastel-pink: oklch(92% 0.15 330); /* #FFB3F6 */
   --color-pastel-mint: oklch(85% 0.12 160); /* #A7F3D0 */
   --color-pastel-yellow: oklch(95% 0.2 80); /* #FFD43B */
   --color-pastel-lavender: oklch(85% 0.1 290); /* #D8B4FE */
   --color-pastel-sky: oklch(88% 0.1 220); /* #96D0FF */
-
   /* Utility colors for prose */
   --color-muted: oklch(90% 0.02 240); /* Light gray background */
   --color-muted-foreground: oklch(40% 0.05 240); /* Darker text */
-  --color-border: oklch(80% 0.02 240); /* Border color */
-
+  --color-border: oklch(88% 0.05 240); /* Soft pastel border */
   --spacing-space-sm: 0.5rem; /* 8px */
   --spacing-space-md: 1rem; /* 16px */
   --spacing-space-lg: 2rem; /* 32px */
-  --spacing-space-massive: 3rem; /* 32px */
+  --spacing-space-massive: 3rem; /* 48px */
   --radius: 0.65rem;
-
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --color-destructive: oklch(60% 0.22 350); /* saturated pink-red */
+  --color-destructive-foreground: oklch(20% 0.05 350); /* deep plum */
+  --color-destructive-border: oklch(50% 0.18 350);
+  --color-ring: oklch(55% 0.2 330); /* matching saturated pink ring */
 }
-
 @layer base {
+  /* Prefer using the CSS properties directly so you get the intended variable values */
   body {
-    @apply bg-primary text-primary-foreground;
+    @apply bg-background text-foreground;
   }
+  /* Example: borders using the CSS var */
   * {
     @apply border-border;
   }

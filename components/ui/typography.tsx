@@ -41,6 +41,12 @@ export const H4 = createComponent<HTMLHeadingElement>(
   "H4",
 );
 
+export const H5 = createComponent<HTMLHeadingElement>(
+  "h5",
+  "scroll-m-16 text-lg font-light tracking-tight",
+  "H5",
+);
+
 export const Lead = createComponent<HTMLParagraphElement>(
   "p",
   "text-xl text-muted-foreground",
