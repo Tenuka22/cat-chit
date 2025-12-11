@@ -101,7 +101,7 @@ export const Quote = createComponent<HTMLQuoteElement>(
   "Quote",
 );
 
-export const Span = createComponent<HTMLQuoteElement>(
+export const Span = createComponent<HTMLSpanElement>(
   "span",
   "text-muted-foreground text-sm",
   "Span",

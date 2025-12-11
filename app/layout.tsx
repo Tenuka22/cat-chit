@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import ConvexClientProvider from "@/components/providers/ConvexClientProvider";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 const sans = Poppins({
   variable: "--font-sans",
@@ -27,9 +28,11 @@ export default function RootLayout({
       <body
         className={`${sans.className} min-w-screen min-h-screen flex flex-col antialiased relative size-full`}
       >
-        <div className="isolate size-full flex flex-1 flex-col">
-          <ConvexClientProvider>{children}</ConvexClientProvider>
-        </div>
+        <NuqsAdapter>
+          <div className="isolate size-full flex flex-1 flex-col">
+            <ConvexClientProvider>{children}</ConvexClientProvider>
+          </div>
+        </NuqsAdapter>
       </body>
     </html>
   );

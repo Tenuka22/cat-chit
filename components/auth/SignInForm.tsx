@@ -1,61 +1,102 @@
-import Link from "next/link";
-import { Button } from "../ui/button";
+"use client";
+
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
-} from "../ui/card";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import { Span } from "../ui/typography";
+} from "@/components/ui/card";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { useState } from "react";
+import { useQueryState, parseAsString } from "nuqs";
+
+import { EmailForm } from "./_components/EmailForm";
+import { OTPForm } from "./_components/OTPForm";
+import { StateFinalizedMessage } from "@/lib/types";
+import { AlertCircleIcon, CheckCircle2Icon } from "lucide-react";
+import { P, Span } from "../ui/typography";
 
 const SignInForm = () => {
+  const [email, setEmail] = useQueryState(
+    "email",
+    parseAsString.withDefault(""),
+  );
+  const [step, setStep] = useState<0 | 1>(0);
+  const [error, setError] = useState<StateFinalizedMessage | null>(null);
+  const [success, setSuccess] = useState<StateFinalizedMessage | null>(null);
+
   return (
-    <Card className="w-full max-w-md">
+    <Card className="w-full max-w-md mx-auto">
       <CardHeader>
-        <CardTitle>Proceed with your account</CardTitle>
+        <CardTitle>Welcome back</CardTitle>
         <CardDescription>
           You are just steps away from continuing your dating life.
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <form>
-          <div className="flex flex-col gap-6">
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="m@example.com"
-                required
-              />
-            </div>
-            <div className="grid gap-2">
-              <div className="flex items-center justify-between">
-                <Label htmlFor="password">Password</Label>
-                <Link
-                  href="/auth/sign-up"
-                  className="underline-offset-4 hover:underline"
-                >
-                  <Span>Forgot your password?</Span>
-                </Link>
-              </div>
-              <Input id="password" type="password" required />
-            </div>
-          </div>
-        </form>
+
+      <CardContent className="space-y-4">
+        {step === 0 ? (
+          <EmailForm
+            defaultEmail={email}
+            onEmailSent={(email) => {
+              setEmail(email);
+              setStep(1);
+            }}
+            onSuccess={(success) => {
+              setError(null);
+              setSuccess(success);
+            }}
+            onError={(error) => {
+              setSuccess(null);
+              setError(error);
+            }}
+          />
+        ) : (
+          <OTPForm
+            email={email}
+            onSuccess={(success) => {
+              setError(null);
+              setSuccess(success);
+            }}
+            onError={(error) => {
+              setSuccess(null);
+              setError(error);
+            }}
+            onBack={() => setStep(0)}
+          />
+        )}
+
+        {error && (
+          <Alert variant="destructive" className="capitalize">
+            <AlertCircleIcon />
+            <AlertTitle>Unable to process through {error.action}.</AlertTitle>
+            <AlertDescription>
+              <P>{error.message}</P>
+
+              <ul className="list-inside list-disc text-sm">
+                <li>
+                  <Span>Check your connection.</Span>
+                </li>
+                <li>
+                  <Span>Ensure You&apos;ve provided correct information.</Span>
+                </li>
+                <li>
+                  <Span>Try contacting administration if not proceeding.</Span>
+                </li>
+              </ul>
+            </AlertDescription>
+          </Alert>
+        )}
+
+        {success && (
+          <Alert className="capitalize">
+            <CheckCircle2Icon />
+            <AlertTitle>{success.action} proceeded successfully</AlertTitle>
+            <AlertDescription>{success.message}</AlertDescription>
+          </Alert>
+        )}
       </CardContent>
-      <CardFooter className="flex-col gap-2">
-        <Button type="submit" className="w-full">
-          Login
-        </Button>
-        <Button variant="outline" className="w-full">
-          Login with Google
-        </Button>
-      </CardFooter>
     </Card>
   );
 };

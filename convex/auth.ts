@@ -16,6 +16,7 @@ export const createAuth = (
   return betterAuth({
     logger: {
       disabled: optionsOnly,
+      level: "debug",
     },
     baseURL: siteUrl,
     database: authComponent.adapter(ctx),
@@ -32,7 +33,6 @@ export const createAuth = (
     plugins: [
       convex(),
       emailOTP({
-        storeOTP: "hashed",
         sendVerificationOTP: async ({ email, otp, type }) => {
           if (type === "sign-in") {
             console.log(`Sign In emailOTP Sent, ${email}: ${otp}`);
