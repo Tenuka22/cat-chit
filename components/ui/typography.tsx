@@ -1,4 +1,4 @@
-import cn from "@/lib/cn";
+import { cn } from "@/lib/utils";
 import React, { forwardRef, JSX } from "react";
 
 const createComponent = <T extends HTMLElement>(
