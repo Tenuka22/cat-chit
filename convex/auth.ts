@@ -30,6 +30,7 @@ export const createAuth = (
         clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
       },
     },
+    advanced: { cookiePrefix: "cat-chit" },
     plugins: [
       convex(),
       emailOTP({

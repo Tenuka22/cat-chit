@@ -55,12 +55,12 @@ export function OTPForm({
 
       try {
         setLoading(true);
-        const { data, error } = await authClient.emailOtp.verifyEmail({
+        const { data, error } = await authClient.signIn.emailOtp({
           email,
           otp: value.otp,
         });
 
-        if (data?.status) {
+        if (data?.token) {
           onSuccess({
             action,
             message: `Successfully verified OTP for ${authType}. You will be redirected shortly.`,
@@ -118,6 +118,7 @@ export function OTPForm({
                         maxLength={6}
                         id={field.name}
                         name={field.name}
+                        disabled={loading}
                         value={field.state.value}
                         onBlur={field.handleBlur}
                         onChange={(e) => field.handleChange(e)}

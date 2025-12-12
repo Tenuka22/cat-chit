@@ -35,7 +35,6 @@ const SignInForm = () => {
   const handleSignInSuccess = (successMsg: StateFinalizedMessage) => {
     setSuccess(successMsg);
     setError(null);
-    router.push("/chat/onboarding");
   };
 
   const handleSignInError = (errorMsg: StateFinalizedMessage) => {

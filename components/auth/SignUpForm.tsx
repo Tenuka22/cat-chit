@@ -67,8 +67,6 @@ const SignUpForm = () => {
             onSuccess={(successMsg) => {
               setSuccess(successMsg);
               setError(null);
-
-              router.push("/chat/onboarding");
             }}
             onError={(errorMsg) => {
               setError(errorMsg);

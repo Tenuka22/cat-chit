@@ -20,3 +20,17 @@ export const checkIfUserExists = mutation({
     return !!user;
   },
 });
+
+export const getUserData = query({
+  args: {},
+  handler: async (ctx) => {
+    const user = await authComponent.getAuthUser(ctx);
+
+    const userData = await ctx.db
+      .query("user_data")
+      .withIndex("by_user", (q) => q.eq("userId", user._id))
+      .unique();
+
+    return { user, userData };
+  },
+});

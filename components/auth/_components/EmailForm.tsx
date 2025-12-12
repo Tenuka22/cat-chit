@@ -38,6 +38,8 @@ export function EmailForm({
   authType: "sign-in" | "sign-up";
 }) {
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+
   const form = useForm({
     defaultValues: { email: defaultEmail },
     validators: { onSubmit: emailSchema },
@@ -69,6 +71,18 @@ export function EmailForm({
     },
   });
 
+  const handleGoogleLogin = async () => {
+    const action = `${authType} google sign-in`;
+    try {
+      setGoogleLoading(true);
+      await authClient.signIn.social({ provider: "google" });
+    } catch (error) {
+      log.withMetadata({ error }).error(action.toUpperCase());
+      onError(mapAuthErrors(action, undefined));
+      setGoogleLoading(false);
+    }
+  };
+
   const buttonText =
     authType === "sign-up" ? "Send OTP Code for Sign Up" : "Send OTP Code";
 
@@ -99,6 +113,7 @@ export function EmailForm({
                     id={field.name}
                     name={field.name}
                     value={field.state.value}
+                    disabled={loading || googleLoading}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
                     aria-invalid={isInvalid}
@@ -113,7 +128,12 @@ export function EmailForm({
         </FieldGroup>
 
         <ButtonGroup orientation="vertical" className="w-full gap-3">
-          <Button disabled={loading} type="submit" size="lg" className="w-full">
+          <Button
+            disabled={loading || googleLoading}
+            type="submit"
+            size="lg"
+            className="w-full"
+          >
             {buttonText}
             {loading ? <Spinner /> : <ChevronRight className="ml-2 h-4 w-4" />}
           </Button>
@@ -129,8 +149,15 @@ export function EmailForm({
             </div>
           </div>
 
-          <Button type="button" variant="outline" size="lg" className="w-full">
-            <Globe className="mr-2 h-4 w-4" />
+          <Button
+            onClick={handleGoogleLogin}
+            type="button"
+            variant="outline"
+            size="lg"
+            className="w-full"
+            disabled={googleLoading || loading}
+          >
+            {googleLoading ? <Spinner /> : <Globe className="mr-2 h-4 w-4" />}
             Continue with Google
           </Button>
         </ButtonGroup>
