@@ -18,21 +18,26 @@ const proxy = async (request: NextRequest) => {
   const user = data?.user;
   const userData = data?.userData;
 
+  const dev = process.env.NODE_ENV === "development";
   const { pathname } = new URL(request.url);
 
-  if (user && !userData && !pathname.startsWith("/onboarding")) {
+  if (user && !dev && !userData && !pathname.startsWith("/onboarding")) {
     return NextResponse.redirect(new URL("/onboarding", request.url));
   }
 
-  if (!user && pathname.startsWith("/onboarding")) {
+  if (!user && !dev && pathname.startsWith("/onboarding")) {
     return NextResponse.redirect(new URL("/auth/sign-up", request.url));
   }
 
-  if (user && (pathname === "/auth/sign-up" || pathname === "/auth/sign-in")) {
+  if (
+    user &&
+    !dev &&
+    (pathname === "/auth/sign-up" || pathname === "/auth/sign-in")
+  ) {
     return NextResponse.redirect(new URL("/chat", request.url));
   }
 
-  if (!user && pathname.startsWith("/app")) {
+  if (!user && !dev && pathname.startsWith("/app")) {
     return NextResponse.redirect(new URL("/auth/sign-up", request.url));
   }
 
