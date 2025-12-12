@@ -5,7 +5,12 @@ import { v } from "convex/values";
 export const getCurrentUser = query({
   args: {},
   handler: async (ctx) => {
-    return authComponent.getAuthUser(ctx);
+    try {
+      const user = await authComponent.getAuthUser(ctx);
+      return user;
+    } catch {
+      return null;
+    }
   },
 });
 
